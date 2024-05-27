@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Eventos{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'eventos/eventos.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Eventos</h2>
+    <a href="{% url 'crear_evento' %}" class="btn btn-primary">Crear Nuevo Evento</a>
+    
+    <form method="get" action="" class="form-filters">
+        <div>
+            <label for="mes">Mes:</label>
+            <select name="mes" id="mes">
+                <option value="">Todos</option>
+                {% for mes in meses %}
+                <option value="{{ mes.id }}">{{ mes.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="categoria">Categoría:</label>
+            <select name="categoria" id="categoria">
+                <option value="">Todas</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.0 }}">{{ categoria.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="keyword">Buscar:</label>
+            <input type="text" name="keyword" id="keyword" placeholder="Buscar por nombre">
+        </div>
+        <button type="submit">Buscar</button>
+    </form>
+    
+    <div class="event-grid">
+        {% for evento in eventos %}
+        <div class="event-card">
+            <h3>{{ evento.1 }}</h3>
+            <p>{{ evento.2 }}</p>
+            <p><strong>Lugar:</strong> {{ evento.3 }}</p>
+            <p><strong>Fecha:</strong> {{ evento.4 }}</p>
+            <p><strong>Categoría:</strong> {{ evento.5 }}</p>
+            <p><strong>Creador:</strong> {{ evento.6 }} {{ evento.7 }} {{ evento.8 }}</p>
+            <a href="{% url 'evento_detalle' evento.0 %}">Ver más</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
